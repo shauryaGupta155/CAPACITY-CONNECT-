@@ -9,89 +9,40 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
         body { 
             background: radial-gradient(circle at top right, #1e1b4b, #0f172a, #030712); 
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            color: #e2e8f0;
+            min-height: 100vh; display: flex; justify-content: center; align-items: center;
+            padding: 20px; color: #e2e8f0;
         }
         .container { 
-            width: 100%;
-            max-width: 950px; 
-            background: rgba(15, 23, 42, 0.85); 
-            backdrop-filter: blur(16px);
-            padding: 40px; 
-            border-radius: 20px; 
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); 
-            border: 1px solid rgba(139, 92, 246, 0.2);
+            width: 100%; max-width: 950px; background: rgba(15, 23, 42, 0.85); 
+            backdrop-filter: blur(16px); padding: 40px; border-radius: 20px; 
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); border: 1px solid rgba(139, 92, 246, 0.2);
         }
-
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 20px; }
         h1 { color: #f8fafc; font-size: 26px; font-weight: 600; letter-spacing: -0.5px; }
         .role-badge { background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%); color: white; padding: 6px 14px; border-radius: 30px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 0 15px rgba(139, 92, 246, 0.4); }
-
         .btn { 
-            background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%); 
-            color: white; 
-            border: none; 
-            padding: 12px 24px; 
-            border-radius: 10px; 
-            font-weight: 600; 
-            cursor: pointer; 
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+            background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%); color: white; 
+            border: none; padding: 12px 24px; border-radius: 10px; font-weight: 600; 
+            cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
         }
-        .btn:hover { 
-            transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(139, 92, 246, 0.5);
-            background: linear-gradient(135deg, #7c3aed, #4f46e5);
-        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 25px rgba(139, 92, 246, 0.5); }
         .btn-logout { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3); }
         .btn-logout:hover { box-shadow: 0 6px 20px rgba(239, 68, 68, 0.5); }
-
         .section-box { display: none; animation: fadeIn 0.4s ease-in-out; }
         .active-section { display: block; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .form-group { margin-bottom: 20px; }
         label { display: block; font-weight: 600; font-size: 13px; margin-bottom: 8px; color: #94a3b8; }
         input, select, textarea { 
-            width: 100%; 
-            padding: 12px 16px; 
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            border-radius: 10px; 
-            font-size: 14px; 
-            transition: all 0.3s;
-            background: rgba(30, 41, 59, 0.7);
-            color: #f8fafc;
+            width: 100%; padding: 12px 16px; border: 1px solid rgba(255, 255, 255, 0.1); 
+            border-radius: 10px; font-size: 14px; background: rgba(30, 41, 59, 0.7); color: #f8fafc;
         }
-        input:focus, select:focus, textarea:focus {
-            border-color: #8b5cf6;
-            background: rgba(30, 41, 59, 1);
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.25);
-        }
-
         select option { background: #0f172a; color: #f8fafc; }
-
         .card { 
-            background: rgba(30, 41, 59, 0.6); 
-            padding: 20px; 
-            border-radius: 12px; 
-            margin-bottom: 15px; 
-            border-left: 5px solid #8b5cf6;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            transition: transform 0.2s;
+            background: rgba(30, 41, 59, 0.6); padding: 20px; border-radius: 12px; 
+            margin-bottom: 15px; border-left: 5px solid #8b5cf6; border: 1px solid rgba(255, 255, 255, 0.05);
         }
-        .card:hover { transform: translateY(-2px); border-color: rgba(139, 92, 246, 0.4); }
-
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; background: rgba(30, 41, 59, 0.6); border-radius: 10px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.05); }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; background: rgba(30, 41, 59, 0.6); border-radius: 10px; overflow: hidden; }
         th, td { padding: 15px; text-align: left; border-bottom: 1px solid rgba(255, 255, 255, 0.05); font-size: 14px; color: #cbd5e1; }
         th { background-color: rgba(15, 23, 42, 0.8); color: #f8fafc; font-weight: 600; }
     </style>
@@ -157,7 +108,6 @@
                 </tbody>
             </table>
         </div>
-
     </div>
 
     <script>
@@ -184,7 +134,8 @@
         // --- TRAINEE FUNCTIONS ---
         async function loadTraineeMaterials() {
             try {
-                let res = await fetch('http://localhost:3000/api/materials');
+                // ⚠️ FIX: Relative path used
+                let res = await fetch('/api/materials');
                 let data = await res.json();
                 let container = document.getElementById("traineeModulesContainer");
                 if(data.success && data.materials.length > 0) {
@@ -193,7 +144,7 @@
                             <h3>${m.title}</h3>
                             <p>${m.description}</p>
                             <span style="font-size:11px; color:#8b5cf6; font-weight:600;">Instructor: ${m.trainerName}</span>
-                            ${m.filePath ? `<br><a href="http://localhost:3000${m.filePath}" target="_blank" style="display:inline-block; margin-top:10px; color:#38bdf8; text-decoration:none; font-weight:600;">📄 View/Download Attached File</a>` : ''}
+                            ${m.filePath ? `<br><a href="${m.filePath}" target="_blank" style="display:inline-block; margin-top:10px; color:#38bdf8; text-decoration:none; font-weight:600;">📄 View/Download Attached File</a>` : ''}
                         </div>
                     `).join('');
                 } else {
@@ -217,11 +168,10 @@
             formData.append("title", title);
             formData.append("description", description);
             formData.append("trainerName", username);
-            if(fileInput) {
-                formData.append("file", fileInput);
-            }
+            if(fileInput) { formData.append("file", fileInput); }
 
-            let res = await fetch('http://localhost:3000/api/upload-material', {
+            // ⚠️ FIX: Relative path used
+            let res = await fetch('/api/upload-material', {
                 method: 'POST',
                 body: formData 
             });
@@ -238,7 +188,8 @@
 
         // --- ADMIN FUNCTIONS ---
         async function fetchUsersForMapping() {
-            let res = await fetch('http://localhost:3000/api/users');
+            // ⚠️ FIX: Relative path used
+            let res = await fetch('/api/users');
             let data = await res.json();
             if(data.success) {
                 let trainees = data.users.filter(u => u.role === 'trainee');
@@ -254,7 +205,8 @@
             let trainerName = document.getElementById("trainerSelect").value;
             let msg = document.getElementById("mapMsg");
 
-            let res = await fetch('http://localhost:3000/api/assign-mapping', {
+            // ⚠️ FIX: Relative path used
+            let res = await fetch('/api/assign-mapping', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ traineeName, trainerName })
@@ -267,7 +219,8 @@
         }
 
         async function loadMappings() {
-            let res = await fetch('http://localhost:3000/api/mappings');
+            // ⚠️ FIX: Relative path used
+            let res = await fetch('/api/mappings');
             let data = await res.json();
             let tbody = document.getElementById("mappingTableBody");
             if(data.success && data.mappings.length > 0) {

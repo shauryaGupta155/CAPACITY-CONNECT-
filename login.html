@@ -3,140 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Capacity Connect</title>
+    <title>Capacity Connect - Cloud Login</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
         body { 
             background: radial-gradient(circle at top right, #1e1b4b, #0f172a, #030712); 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            height: 100vh; 
-            color: #e2e8f0;
+            min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px;
         }
-        .card { 
-            background: rgba(15, 23, 42, 0.85); 
-            backdrop-filter: blur(16px);
-            padding: 40px; 
-            border-radius: 20px; 
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); 
-            border: 1px solid rgba(139, 92, 246, 0.2);
-            width: 100%; 
-            max-width: 400px; 
+        .container { 
+            background: white; padding: 40px; border-radius: 12px; width: 100%; max-width: 400px; 
+            text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
         }
-        h2 { color: #f8fafc; margin-bottom: 25px; text-align: center; font-weight: 600; font-size: 24px; }
-        .form-group { margin-bottom: 20px; }
-        label { display: block; font-weight: 600; font-size: 13px; margin-bottom: 8px; color: #94a3b8; }
-        
+        h2 { margin-bottom: 25px; color: #b45309; font-weight: 600; }
+        .form-group { margin-bottom: 15px; text-align: left; }
+        label { display: block; font-weight: 600; font-size: 13px; margin-bottom: 8px; color: #333; }
         input, select { 
-            width: 100%; 
-            padding: 12px 16px; 
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            border-radius: 10px; 
-            font-size: 14px; 
-            background: rgba(30, 41, 59, 0.7);
-            color: #f8fafc;
-            transition: all 0.3s;
+            width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; 
+            background: #f9fafb;
         }
-        input:focus, select:focus {
-            border-color: #8b5cf6;
-            background: rgba(30, 41, 59, 1);
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.25);
-        }
-        select option { background: #0f172a; color: #f8fafc; }
-
         .btn { 
-            width: 100%; 
-            background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%); 
-            color: white; 
-            border: none; 
-            padding: 12px; 
-            border-radius: 10px; 
-            font-weight: 600; 
-            cursor: pointer; 
-            margin-top: 10px; 
-            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
-            transition: all 0.3s ease;
+            background: #d97706; color: white; border: none; padding: 14px; width: 100%; 
+            border-radius: 6px; font-weight: 600; cursor: pointer; margin-top: 15px; font-size: 15px;
         }
-        .btn:hover { 
-            transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(139, 92, 246, 0.5);
-        }
-        .msg { margin-top: 15px; font-size: 13px; text-align: center; font-weight: 600; }
-        .link { text-align: center; margin-top: 20px; font-size: 13px; color: #94a3b8; }
-        .link a { color: #8b5cf6; text-decoration: none; font-weight: 600; }
-        .link a:hover { text-decoration: underline; }
+        .btn:hover { background: #b45309; }
+        .toggle-link { margin-top: 20px; font-size: 13px; color: #555; cursor: pointer; }
+        .toggle-link:hover { color: #d97706; text-decoration: underline; }
+        #msg { margin-top: 15px; font-weight: 600; font-size: 13px; }
     </style>
 </head>
 <body>
-
-    <div class="card">
-        <h2>Welcome Back! 🚀</h2>
-        <div class="form-group">
-            <label>Username</label>
-            <input type="text" id="username" placeholder="Enter username">
-        </div>
-        <div class="form-group">
-            <label>Password</label>
-            <input type="password" id="password" placeholder="Enter password">
-        </div>
+    <div class="container">
+        <h2 id="formTitle">Create Cloud Account</h2>
+        
         <div class="form-group">
             <label>Select Role</label>
             <select id="role">
-                <option value="trainee">Trainee</option>
-                <option value="trainer">Trainer</option>
                 <option value="admin">Admin</option>
+                <option value="trainer">Trainer</option>
+                <option value="trainee">Trainee</option>
             </select>
         </div>
-        <button class="btn" onclick="loginUser()">Login to Dashboard</button>
-        <p id="msg" class="msg"></p>
-        <div class="link">
-            Don't have an account? <a href="register.html">Register here</a>
+        <div class="form-group">
+            <label>Username</label>
+            <input type="text" id="username" placeholder="e.g. srmcem">
         </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="password" placeholder="••••••••">
+        </div>
+        
+        <button class="btn" id="submitBtn" onclick="submitForm()">Register User</button>
+        <p id="msg"></p>
+        <p class="toggle-link" onclick="toggleMode()" id="toggleText">Already have an account? Login here</p>
     </div>
 
     <script>
-        async function loginUser() {
-            let username = document.getElementById("username").value.trim();
-            let password = document.getElementById("password").value.trim();
+        let isLogin = false; // By default registration dikhega, jaisa tumhari image mein tha
+
+        function toggleMode() {
+            isLogin = !isLogin;
+            document.getElementById("formTitle").innerText = isLogin ? "Login to Cloud" : "Create Cloud Account";
+            document.getElementById("submitBtn").innerText = isLogin ? "Login" : "Register User";
+            document.getElementById("toggleText").innerText = isLogin ? "Don't have an account? Register here" : "Already have an account? Login here";
+            document.getElementById("msg").innerText = "";
+        }
+
+        async function submitForm() {
             let role = document.getElementById("role").value;
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
             let msg = document.getElementById("msg");
 
-            if (!username || !password) {
-                msg.style.color = "#ef4444";
-                msg.innerText = "Please fill in all fields!";
-                return;
+            if(!username || !password) {
+                msg.style.color = "#dc2626"; msg.innerText = "Please fill all fields!"; return;
             }
 
+            // ⚠️ FIX: Yahan se http://localhost:3000 hata diya gaya hai!
+            let endpoint = isLogin ? '/api/login' : '/api/register';
+
             try {
-                let res = await fetch('http://localhost:3000/api/login', {
+                let res = await fetch(endpoint, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username, password, role })
                 });
-
                 let data = await res.json();
 
-                if (data.success) {
-                    localStorage.setItem("username", username);
-                    localStorage.setItem("role", role);
-
-                    msg.style.color = "#10b981";
-                    msg.innerText = "Login successful! Redirecting...";
-                    
-                    setTimeout(() => {
-                        window.location.href = "dashboard.html";
-                    }, 800);
+                if(data.success) {
+                    msg.style.color = "#16a34a"; 
+                    msg.innerText = data.message;
+                    if(isLogin) {
+                        localStorage.setItem("username", username);
+                        localStorage.setItem("role", role);
+                        // Login successful hone par dashboard khulega
+                        setTimeout(() => window.location.href = "dashboard.html", 1000);
+                    } else {
+                        // Registration ke baad login mode mein switch ho jayega
+                        setTimeout(() => toggleMode(), 1000);
+                    }
                 } else {
-                    msg.style.color = "#ef4444";
-                    msg.innerText = data.message || "Invalid credentials!";
+                    msg.style.color = "#dc2626"; msg.innerText = data.message;
                 }
-            } catch (err) {
-                console.error(err);
-                msg.style.color = "#ef4444";
-                msg.innerText = "Server error! Make sure server is running.";
+            } catch(err) {
+                msg.style.color = "#dc2626"; msg.innerText = "Server error! Make sure backend is running.";
             }
         }
     </script>
