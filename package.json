@@ -1,0 +1,22 @@
+{
+  "name": "capacity-connect",
+  "version": "1.0.0",
+  "description": "A full-stack role-based cloud training and competency mapping application",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "mongoose": "^8.0.0",
+    "multer": "^2.3.0"
+  },
+  "keywords": [
+    "capacity-connect",
+    "fullstack",
+    "mongodb"
+  ],
+  "author": "Shaurya Gupta",
+  "license": "ISC"
+}

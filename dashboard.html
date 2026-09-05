@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capacity Connect - App Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { 
+            background: radial-gradient(circle at top right, #1e1b4b, #0f172a, #030712); 
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #e2e8f0;
+        }
+        .container { 
+            width: 100%;
+            max-width: 950px; 
+            background: rgba(15, 23, 42, 0.85); 
+            backdrop-filter: blur(16px);
+            padding: 40px; 
+            border-radius: 20px; 
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); 
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 20px; }
+        h1 { color: #f8fafc; font-size: 26px; font-weight: 600; letter-spacing: -0.5px; }
+        .role-badge { background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%); color: white; padding: 6px 14px; border-radius: 30px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 0 15px rgba(139, 92, 246, 0.4); }
+
+        .btn { 
+            background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%); 
+            color: white; 
+            border: none; 
+            padding: 12px 24px; 
+            border-radius: 10px; 
+            font-weight: 600; 
+            cursor: pointer; 
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        }
+        .btn:hover { 
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(139, 92, 246, 0.5);
+            background: linear-gradient(135deg, #7c3aed, #4f46e5);
+        }
+        .btn-logout { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3); }
+        .btn-logout:hover { box-shadow: 0 6px 20px rgba(239, 68, 68, 0.5); }
+
+        .section-box { display: none; animation: fadeIn 0.4s ease-in-out; }
+        .active-section { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-weight: 600; font-size: 13px; margin-bottom: 8px; color: #94a3b8; }
+        input, select, textarea { 
+            width: 100%; 
+            padding: 12px 16px; 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            border-radius: 10px; 
+            font-size: 14px; 
+            transition: all 0.3s;
+            background: rgba(30, 41, 59, 0.7);
+            color: #f8fafc;
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: #8b5cf6;
+            background: rgba(30, 41, 59, 1);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.25);
+        }
+
+        select option { background: #0f172a; color: #f8fafc; }
+
+        .card { 
+            background: rgba(30, 41, 59, 0.6); 
+            padding: 20px; 
+            border-radius: 12px; 
+            margin-bottom: 15px; 
+            border-left: 5px solid #8b5cf6;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+        .card:hover { transform: translateY(-2px); border-color: rgba(139, 92, 246, 0.4); }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; background: rgba(30, 41, 59, 0.6); border-radius: 10px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.05); }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid rgba(255, 255, 255, 0.05); font-size: 14px; color: #cbd5e1; }
+        th { background-color: rgba(15, 23, 42, 0.8); color: #f8fafc; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Top Nav / Header -->
+        <div class="header">
+            <div>
+                <h1 id="welcomeTitle">Welcome to App 🚀</h1>
+                <span id="roleBadge" class="role-badge">Loading...</span>
+            </div>
+            <button class="btn btn-logout" onclick="logout()">Logout</button>
+        </div>
+
+        <!-- ================= TRAINEE VIEW ================= -->
+        <div id="traineeView" class="section-box">
+            <h2 style="font-size: 18px; color: #f8fafc; margin-bottom: 15px;">🎓 Trainee Portal: Available Modules</h2>
+            <div id="traineeModulesContainer">Loading live modules...</div>
+        </div>
+
+        <!-- ================= TRAINER VIEW ================= -->
+        <div id="trainerView" class="section-box">
+            <h2 style="font-size: 18px; color: #f8fafc; margin-bottom: 15px;">👨‍🏫 Trainer Portal: Publish Module</h2>
+            <div class="form-group">
+                <label>Module Title</label>
+                <input type="text" id="mTitle" placeholder="e.g. Advanced Node.js">
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea id="mDesc" rows="3" placeholder="Enter module details..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>Upload PDF or Photo</label>
+                <input type="file" id="mFile" accept=".pdf, image/*">
+            </div>
+            <button class="btn" onclick="uploadMaterial()">Publish Module to Cloud</button>
+            <p id="uploadMsg" style="margin-top: 10px; font-weight: 600; font-size: 13px;"></p>
+        </div>
+
+        <!-- ================= ADMIN VIEW ================= -->
+        <div id="adminView" class="section-box">
+            <h2 style="font-size: 18px; color: #34d399; margin-bottom: 15px;">⚙️ Admin Interconnection Engine</h2>
+            <div class="form-group">
+                <label>Select Trainee</label>
+                <select id="traineeSelect"><option value="">Loading...</option></select>
+            </div>
+            <div class="form-group">
+                <label>Select Trainer</label>
+                <select id="trainerSelect"><option value="">Loading...</option></select>
+            </div>
+            <button class="btn" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);" onclick="saveMapping()">Establish Cloud Connection</button>
+            <p id="mapMsg" style="margin-top: 10px; font-weight: 600; font-size: 13px;"></p>
+
+            <h3 style="font-size: 16px; margin-top: 25px; color: #f8fafc;">Active System Mappings</h3>
+            <table>
+                <thead>
+                    <tr><th>Trainee</th><th>Trainer</th><th>Status</th></tr>
+                </thead>
+                <tbody id="mappingTableBody">
+                    <tr><td colspan="3">Loading mappings...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script>
+        const username = localStorage.getItem("username");
+        const role = localStorage.getItem("role");
+
+        if (!username || !role) {
+            window.location.href = "login.html";
+        }
+
+        document.getElementById("welcomeTitle").innerText = `Hello, ${username}! 👋`;
+        document.getElementById("roleBadge").innerText = role;
+
+        if (role === 'trainee') {
+            document.getElementById("traineeView").classList.add("active-section");
+            loadTraineeMaterials();
+        } else if (role === 'trainer') {
+            document.getElementById("trainerView").classList.add("active-section");
+        } else if (role === 'admin') {
+            document.getElementById("adminView").classList.add("active-section");
+            fetchUsersForMapping();
+        }
+
+        // --- TRAINEE FUNCTIONS ---
+        async function loadTraineeMaterials() {
+            try {
+                let res = await fetch('http://localhost:3000/api/materials');
+                let data = await res.json();
+                let container = document.getElementById("traineeModulesContainer");
+                if(data.success && data.materials.length > 0) {
+                    container.innerHTML = data.materials.map(m => `
+                        <div class="card">
+                            <h3>${m.title}</h3>
+                            <p>${m.description}</p>
+                            <span style="font-size:11px; color:#8b5cf6; font-weight:600;">Instructor: ${m.trainerName}</span>
+                            ${m.filePath ? `<br><a href="http://localhost:3000${m.filePath}" target="_blank" style="display:inline-block; margin-top:10px; color:#38bdf8; text-decoration:none; font-weight:600;">📄 View/Download Attached File</a>` : ''}
+                        </div>
+                    `).join('');
+                } else {
+                    container.innerHTML = "<p>No modules published yet.</p>";
+                }
+            } catch(err) { console.error(err); }
+        }
+
+        // --- TRAINER FUNCTIONS ---
+        async function uploadMaterial() {
+            let title = document.getElementById("mTitle").value;
+            let description = document.getElementById("mDesc").value;
+            let fileInput = document.getElementById("mFile").files[0];
+            let msg = document.getElementById("uploadMsg");
+
+            if(!title || !description) {
+                msg.style.color = "#ef4444"; msg.innerText = "Please fill title and description!"; return;
+            }
+
+            let formData = new FormData();
+            formData.append("title", title);
+            formData.append("description", description);
+            formData.append("trainerName", username);
+            if(fileInput) {
+                formData.append("file", fileInput);
+            }
+
+            let res = await fetch('http://localhost:3000/api/upload-material', {
+                method: 'POST',
+                body: formData 
+            });
+            let data = await res.json();
+            if(data.success) {
+                msg.style.color = "#10b981"; msg.innerText = "Module & File published successfully! 🚀";
+                document.getElementById("mTitle").value = "";
+                document.getElementById("mDesc").value = "";
+                document.getElementById("mFile").value = "";
+            } else {
+                msg.style.color = "#ef4444"; msg.innerText = "Failed to upload.";
+            }
+        }
+
+        // --- ADMIN FUNCTIONS ---
+        async function fetchUsersForMapping() {
+            let res = await fetch('http://localhost:3000/api/users');
+            let data = await res.json();
+            if(data.success) {
+                let trainees = data.users.filter(u => u.role === 'trainee');
+                let trainers = data.users.filter(u => u.role === 'trainer');
+                document.getElementById("traineeSelect").innerHTML = trainees.length ? trainees.map(t => `<option value="${t.username}">${t.username}</option>`).join('') : `<option value="">No trainees</option>`;
+                document.getElementById("trainerSelect").innerHTML = trainers.length ? trainers.map(t => `<option value="${t.username}">${t.username}</option>`).join('') : `<option value="">No trainers</option>`;
+            }
+            loadMappings();
+        }
+
+        async function saveMapping() {
+            let traineeName = document.getElementById("traineeSelect").value;
+            let trainerName = document.getElementById("trainerSelect").value;
+            let msg = document.getElementById("mapMsg");
+
+            let res = await fetch('http://localhost:3000/api/assign-mapping', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ traineeName, trainerName })
+            });
+            let data = await res.json();
+            if(data.success) {
+                msg.style.color = "#10b981"; msg.innerText = "Interconnected successfully! 🚀";
+                loadMappings();
+            } else { msg.style.color = "#ef4444"; msg.innerText = "Failed."; }
+        }
+
+        async function loadMappings() {
+            let res = await fetch('http://localhost:3000/api/mappings');
+            let data = await res.json();
+            let tbody = document.getElementById("mappingTableBody");
+            if(data.success && data.mappings.length > 0) {
+                tbody.innerHTML = data.mappings.map(m => `
+                    <tr><td>${m.traineeName}</td><td>${m.trainerName}</td><td style="color:#34d399;">● Active</td></tr>
+                `).join('');
+            } else { tbody.innerHTML = `<tr><td colspan="3">No mappings yet.</td></tr>`; }
+        }
+
+        function logout() {
+            localStorage.clear();
+            window.location.href = "login.html";
+        }
+    </script>
+</body>
+</html>
