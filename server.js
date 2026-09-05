@@ -1,20 +1,22 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const multer = require('multer');
+const multer = require('multer'); 
+const path = require('path'); // Yeh naya joda hai taaki HTML file sahi se load ho
 
 const app = express();
 app.use(express.json());
 app.use(cors());
+
+// Front-end files (HTML, CSS) ko browser mein chalane ki permission
 app.use(express.static(__dirname));
 
-// File uploads public karne ke liye
+// Uploads folder (PDF/Photos) ko public karne ke liye
 app.use('/uploads', express.static('uploads'));
 const upload = multer({ dest: 'uploads/' }); 
 
 // ==========================================
-// ⚠️ NEECHE DI GAYI LINE MEIN APNA LINK DAALO
-// LINK KO SIRF " " (QUOTES) KE ANDAR HI RAKHNA
+// ⚠️ YAHAN APNA MONGODB LINK DAALNA MAT BHOOLNA
 // ==========================================
 const MONGO_URI = "mongodb+srv://shauryag983_db_user:S18eOKXGW6kBKQQ8@cluster0.e5mbyr7.mongodb.net/?appName=Cluster0"; 
 
@@ -34,7 +36,7 @@ const materialSchema = new mongoose.Schema({
     title: { type: String, required: true },
     description: { type: String, required: true },
     trainerName: { type: String, required: true },
-    filePath: { type: String }, // File path yahan save hoga
+    filePath: { type: String }, 
     createdAt: { type: Date, default: Date.now }
 });
 const Material = mongoose.model('Material', materialSchema);
@@ -46,6 +48,11 @@ const mappingSchema = new mongoose.Schema({
 const Mapping = mongoose.model('Mapping', mappingSchema);
 
 // --- ROUTES ---
+
+// ⭐ DEFAULT ROUTE: Jab koi tumhara main link kholega, toh usko seedha login page dikhega! (Yahi fix hai)
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'login.html'));
+});
 
 // 1. Register API
 app.post('/api/register', async (req, res) => {
@@ -91,10 +98,6 @@ app.post('/api/upload-material', upload.single('file'), async (req, res) => {
 // 4. Get Materials API
 app.get('/api/materials', async (req, res) => {
     try {
-        // Default route - Jab koi link kholega toh seedha login page dikhega
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/login.html');
-});
         const materials = await Material.find().sort({ createdAt: -1 });
         res.status(200).json({ success: true, materials });
     } catch (err) {
@@ -137,5 +140,5 @@ app.get('/api/mappings', async (req, res) => {
 // --- SERVER START ---
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`✅ Server is running on http://localhost:${PORT}`);
+    console.log(`✅ Server is running on port ${PORT}`);
 });
