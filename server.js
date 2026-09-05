@@ -91,6 +91,10 @@ app.post('/api/upload-material', upload.single('file'), async (req, res) => {
 // 4. Get Materials API
 app.get('/api/materials', async (req, res) => {
     try {
+        // Default route - Jab koi link kholega toh seedha login page dikhega
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/login.html');
+});
         const materials = await Material.find().sort({ createdAt: -1 });
         res.status(200).json({ success: true, materials });
     } catch (err) {
